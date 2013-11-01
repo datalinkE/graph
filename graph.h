@@ -57,8 +57,8 @@ public:
         vertices.at(x);
         vertices.at(y);
         // the code above should throw out_of_bounds if indeces are wrong
-        auto iElement = vertices.find(makeEdgeKey(x, y));
-        if (iElement == vertices.end())
+        auto iElement = edges.find(makeEdgeKey(x, y));
+        if (iElement == edges.end())
             return -1;
         else
             return iElement->second;
@@ -95,11 +95,11 @@ public:
 
 
 private:
-    std::map<EdgeKey, int> edges;
+    std::map<const EdgeKey, int> edges;
     std::vector<SpVertex> vertices;
     std::vector<std::set<int>> vertexNeighbors;
 
-    EdgeKey makeEdgeKey(int x, int y)
+    static const EdgeKey makeEdgeKey(int x, int y)
     // construct a two-value key where values are ordered
     {
         return (x > y) ?	std::make_pair(y, x) : std::make_pair(x, y);
