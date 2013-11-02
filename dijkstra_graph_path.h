@@ -1,5 +1,5 @@
-#ifndef DEJKSTRA_GRAPH_PATH_H
-#define DEJKSTRA_GRAPH_PATH_H
+#ifndef DIJKSTRA_GRAPH_PATH_H
+#define DIJKSTRA_GRAPH_PATH_H
 
 #include <list>
 #include <queue>
@@ -36,12 +36,12 @@ public:
 };
 
 template<class Vertex>
-class DejkstraGraphPath
+class DijkstraGraphPath
 // this class uses priority queue to find the shortest path
 // and then holds obtained result as a list of vertex indeces and summary weight
 {
 public:
-    DejkstraGraphPath(const Graph<Vertex>& graph, int x, int y) :
+    DijkstraGraphPath(const Graph<Vertex>& graph, int x, int y) :
         weight(-1),
         _x(x),
         _y(y)
@@ -85,7 +85,7 @@ public:
 };
 
 template <class Vertex>
-std::ostream& operator<< (std::ostream& stream, const DejkstraGraphPath<Vertex>& gp)
+std::ostream& operator<< (std::ostream& stream, const DijkstraGraphPath<Vertex>& gp)
 {
     if(!gp.solvable)
         stream << "No valid path between " << gp._x << " and " << gp._y << std::endl;
@@ -101,4 +101,4 @@ std::ostream& operator<< (std::ostream& stream, const DejkstraGraphPath<Vertex>&
     return stream;
 }
 
-#endif // DEJKSTRA_GRAPH_PATH_H
+#endif // DIJKSTRA_GRAPH_PATH_H

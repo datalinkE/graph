@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "graph.h"
-#include "dejkstra_graph_path.h"
+#include "dijkstra_graph_path.h"
 
 using namespace std;
 
@@ -26,7 +26,7 @@ void basic_use()
     }
     ::cout << G;
 
-    ::cout << DejkstraGraphPath<int>(G, 0, 1);
+    ::cout << DijkstraGraphPath<int>(G, 0, 1);
 }
 
 void simulation(int node_count, double edge_density, int weight_limit)
@@ -67,7 +67,7 @@ void simulation(int node_count, double edge_density, int weight_limit)
     int paths_count = node_count - 1;
     for(int i = 1; i < node_count; i++)
     {
-        DejkstraGraphPath<int> path(G, 0, i);
+        DijkstraGraphPath<int> path(G, 0, i);
         if(path.solvable)
             paths_summ += path.weight;
         else
@@ -94,7 +94,7 @@ int main()
     ::cout << "Part 1" << ::endl;
     simulation(50, 0.2, 10);
 
-    ::cout << "Part 2" << ::endl;
+    ::cout << ::endl << "Part 2" << ::endl;
     simulation(50, 0.4, 10);
     return 0;
 }
