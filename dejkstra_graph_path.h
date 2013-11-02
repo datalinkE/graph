@@ -44,7 +44,7 @@ public:
     DejkstraGraphPath(const Graph<Vertex>& graph, int x, int y) :
         pathWeight(-1),
         _x(x),
-        _y(y),
+        _y(y)
     // we do here all work on detecting path between vertices x and y in graph
     // using a kind of A* algorithm
     {
