@@ -119,7 +119,7 @@ std::ostream& operator<< (std::ostream& stream, const Graph<Vertex>& G)
         stream << "V(" << i << ") = " << *G.getVertex(i) << " : ";
         for(auto p : G.getVertexNeighbors(i))
         {
-            stream << p << " ";
+            stream << p << "[" << G.distance(i, p) <<"] ";
         }
         stream << std::endl;
     }
