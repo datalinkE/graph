@@ -91,10 +91,11 @@ std::ostream& operator<< (std::ostream& stream, const DejkstraGraphPath<Vertex>&
         stream << "No valid path between " << gp._x << " and " << gp._y << std::endl;
     else
     {
-        stream << "Path: ";
+        stream << "Path " << gp._x << "->" << gp._y
+               << " [weight " << gp.pathWeight << "] :" ;
         for(auto x : gp.shortestPath)
             stream << x << " ";
-        stream << "weight = " << gp.pathWeight << std::endl;
+        stream << std::endl;
     }
 
     return stream;
