@@ -94,7 +94,7 @@ std::ostream& operator<< (std::ostream& stream, const DejkstraGraphPath<Vertex>&
         stream << "Path: ";
         for(auto x : gp.shortestPath)
             stream << x << " ";
-        stream << std::endl;
+        stream << "weight = " << gp.pathWeight << std::endl;
     }
 
     return stream;
