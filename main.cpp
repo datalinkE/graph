@@ -61,21 +61,21 @@ void simulation(int node_count, double edge_density, int weight_limit)
         }
 
     ::cout << G << ::endl;
-    ::cout << "Finding pathes..." << ::endl << ::endl;
+    ::cout << "Finding paths..." << ::endl << ::endl;
 
-    int pathes_summ = 0;
-    int pathes_count = node_count - 1;
+    int paths_summ = 0;
+    int paths_count = node_count - 1;
     for(int i = 1; i < node_count; i++)
     {
         DejkstraGraphPath<int> path(G, 0, i);
         if(path.solvable)
-            pathes_summ += path.weight;
+            paths_summ += path.weight;
         else
-            pathes_count--;
+            paths_count--;
 
         ::cout << path;
     }
-    ::cout << "Average path length is " << pathes_summ / pathes_count << ::endl;
+    ::cout << "Average path length is " << paths_summ / paths_count << ::endl;
 }
 
 void something_wrong()
