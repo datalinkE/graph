@@ -3,7 +3,6 @@
 
 #include <list>
 #include <queue>
-
 #include "graph.h"
 
 class PathWithPriority
@@ -36,13 +35,14 @@ public:
     }
 };
 
-
 template<class Vertex>
 class DejkstraGraphPath
+// this class uses priority queue to find the shortest path
+// and then holds obtained result as a list of vertex indeces and summary weight
 {
 public:
     DejkstraGraphPath(const Graph<Vertex>& graph, int x, int y) :
-        pathWeight(-1),
+        weight(-1),
         _x(x),
         _y(y)
     // we do here all work on detecting path between vertices x and y in graph
@@ -62,8 +62,8 @@ public:
             if(y == index)
             {
                 solvable = true;
-                shortestPath = element.vertices;
-                pathWeight = element.priority;
+                vertices = element.vertices;
+                weight = element.priority;
             }
             else
             {
@@ -78,8 +78,8 @@ public:
         }
     }
 
-    std::list<int> shortestPath;
-    int pathWeight;
+    std::list<int> vertices;
+    int weight;
     bool solvable;
     int _x, _y;
 };
@@ -92,8 +92,8 @@ std::ostream& operator<< (std::ostream& stream, const DejkstraGraphPath<Vertex>&
     else
     {
         stream << "Path " << gp._x << "->" << gp._y
-               << " [weight " << gp.pathWeight << "] :" ;
-        for(auto x : gp.shortestPath)
+               << " [weight " << gp.weight << "] :" ;
+        for(auto x : gp.vertices)
             stream << x << " ";
         stream << std::endl;
     }
