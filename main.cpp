@@ -1,8 +1,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include "graph.hpp"
-#include "dijkstra_graph_path.hpp"
+#include "graph.h"
+#include "dijkstra_graph_path.h"
 
 using namespace std;
 

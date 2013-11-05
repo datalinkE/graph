@@ -3,7 +3,7 @@
 
 #include <list>
 #include <queue>
-#include "graph.hpp"
+#include "graph.cpp"
 
 class PathWithPriority
 // helper class to represent some of the possible pathes as a list of vertex indeces

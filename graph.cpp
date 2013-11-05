@@ -1,6 +1,3 @@
-#ifndef GRAPH_H
-#define GRAPH_H
-
 #include <iostream>
 #include <map>
 #include <vector>
@@ -8,7 +5,12 @@
 #include <memory>
 #include <cassert>
 
-class Graph
+#include "graph.h"
+
+
+// non-public class that do the job
+
+class GraphImplementation
 // My stl-based implementation of an undirected weighted graph.
 // It operates only on vertex numbers so associated objects should be stored elsewhere.
 // Good choise is to use vector<shared_ptr<ObjectClass>> as external storage.
@@ -20,7 +22,7 @@ class Graph
 public:
     typedef std::pair<size_t, size_t> EdgeKey;
 
-    Graph(size_t capacity) :
+    GraphImplementation(size_t capacity) :
     // constructor reservers space for selected capacity
         size(capacity),
         vertexNeighbors(capacity, std::set<size_t>())
@@ -110,5 +112,39 @@ std::ostream& operator<< (std::ostream& stream, const Graph& G)
     return stream;
 }
 
+// below goes an implementation of public Graph class
 
-#endif // GRAPH_H
+Graph::Graph(size_t capacity)
+{
+    impl = std::make_shared<GraphImplementation>(capacity);
+}
+
+size_t Graph::verticesCount() const
+{
+    return impl->verticesCount();
+}
+
+size_t Graph::edgesCount() const
+{
+    return impl->edgesCount();
+}
+
+int Graph::distance(size_t x, size_t y) const
+{
+    return impl->distance(x, y);
+}
+
+void Graph::connect(size_t x, size_t y, int weight)
+{
+    impl->connect(x, y, weight);
+}
+
+void Graph::disconnect(size_t x, size_t y)
+{
+    impl->disconnect(x, y);
+}
+
+std::set<size_t> Graph::getVertexNeighbors(size_t index) const
+{
+    return impl->getVertexNeighbors(index);
+}
