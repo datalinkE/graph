@@ -3,7 +3,7 @@
 
 #include <list>
 #include <queue>
-#include "graph.h"
+#include "graph.hpp"
 
 class PathWithPriority
 // helper class to represent some of the possible pathes as a list of vertex indeces
@@ -35,13 +35,12 @@ public:
     }
 };
 
-template<class Vertex>
 class DijkstraGraphPath
 // this class uses priority queue to find the shortest path
 // and then holds obtained result as a list of vertex indeces and summary weight
 {
 public:
-    DijkstraGraphPath(const Graph<Vertex>& graph, int x, int y) :
+    DijkstraGraphPath(const Graph& graph, int x, int y) :
         weight(-1),
         _x(x),
         _y(y)
@@ -84,8 +83,8 @@ public:
     int _x, _y;
 };
 
-template <class Vertex>
-std::ostream& operator<< (std::ostream& stream, const DijkstraGraphPath<Vertex>& gp)
+
+std::ostream& operator<< (std::ostream& stream, const DijkstraGraphPath& gp)
 {
     if(!gp.solvable)
         stream << "No valid path between " << gp._x << " and " << gp._y << std::endl;

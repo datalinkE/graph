@@ -1,32 +1,28 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include "graph.h"
-#include "dijkstra_graph_path.h"
+#include "graph.hpp"
+#include "dijkstra_graph_path.hpp"
 
 using namespace std;
 
 void basic_use()
-// this function gives a simple and straightforward example
-// of how graph classes API should work
-// each vertex-associated object is stored with a smart pointer
-// its could look odd in this basic example but should be extremaly usefull
-// in real code were graph vertices are associated with some complex data structures
+// This function gives a simple and straightforward example
+// of how graph classes API should work.
+// In real code  graph vertices are associated with some complex data structures
+// from some external storage. I recomend smth. like vector <shared_ptr<ObjectType>>.
 {
     const int VERTICE_COUNT = 3;
 
-    Graph<int> G(VERTICE_COUNT);
-    for(int i = 0; i < VERTICE_COUNT; i++)
-    {
-        G.addVertex( ::make_shared<int>(i) );
-    }
+    Graph G(VERTICE_COUNT);
+
     for(int i = 1; i < VERTICE_COUNT; i++)
     {
         G.connect(0, i, i);
     }
     ::cout << G;
 
-    ::cout << DijkstraGraphPath<int>(G, 0, 1);
+    ::cout << DijkstraGraphPath(G, 0, 1);
 }
 
 void simulation(int node_count, double edge_density, int weight_limit)
@@ -41,11 +37,7 @@ void simulation(int node_count, double edge_density, int weight_limit)
            << edge_density << " dencity and "
            << weight_limit << " max edge weight" << ::endl << ::endl;
 
-    Graph<int> G(node_count);
-    for(int i = 0; i < node_count; i++)
-    {
-        G.addVertex( ::make_shared<int>(i) );
-    }
+    Graph G(node_count);
 
     ::srand(::time(NULL));
 
@@ -67,7 +59,7 @@ void simulation(int node_count, double edge_density, int weight_limit)
     int paths_count = node_count - 1;
     for(int i = 1; i < node_count; i++)
     {
-        DijkstraGraphPath<int> path(G, 0, i);
+        DijkstraGraphPath path(G, 0, i);
         if(path.solvable)
             paths_summ += path.weight;
         else

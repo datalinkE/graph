@@ -6,32 +6,31 @@
 #include <vector>
 #include <set>
 #include <memory>
+#include <cassert>
 
-
-template<class Vertex>
 class Graph
 // My stl-based implementation of an undirected weighted graph.
-// It operates only on vertex numbers and stores associated objects
-// in vector<shared_ptr>. Each vertex caches its neighboring indeces as set<int>.
+// It operates only on vertex numbers so associated objects should be stored elsewhere.
+// Good choise is to use vector<shared_ptr<ObjectClass>> as external storage.
+// Each vertex caches its neighboring indeces as set<int>.
 // Edges are tracked as map< pair<int,int>, int> - two vertex numbers to weight.
 // All functions that take two vertex indeces are symmetric:
 // calls like some_function( index1, index2 ) and some_function( index2, index1) are equivalent.
 {
 public:
-    typedef std::pair<int, int> EdgeKey;
-    typedef std::shared_ptr<Vertex> SpVertex;
+    typedef std::pair<size_t, size_t> EdgeKey;
 
-    Graph(int capacity) :
+    Graph(size_t capacity) :
     // constructor reservers space for selected capacity
-        vertexNeighbors(capacity, std::set<int>())
+        size(capacity),
+        vertexNeighbors(capacity, std::set<size_t>())
     {
-        vertices.reserve(capacity);
     }
 
     int verticesCount() const
     // returns the number of vertices in the graph
     {
-        return vertices.size();
+        return size;
     }
 
     int edgesCount() const
@@ -40,23 +39,11 @@ public:
         return edges.size();
     }
 
-    SpVertex getVertex(int index) const
-    // pass out vertex associated with index
-    {
-        return vertices.at(index);
-    }
-
-    void addVertex(SpVertex sp)
-    {
-        vertices.push_back(sp);
-    }
-
-    int distance(int x, int y) const
+    int distance(size_t x, size_t y) const
     // returns non-negative value (weight) if there is an edge from node x to node y or -1 otherwise
     {
-        vertices.at(x);
-        vertices.at(y);
-        // the code above should throw out_of_bounds if indeces are wrong
+        assert(x < size && y < size);
+        // the code above should fall if indeces are wrong
         auto iElement = edges.find(makeEdgeKey(x, y));
         if (iElement == edges.end())
             return -1;
@@ -64,30 +51,28 @@ public:
             return iElement->second;
     }
 
-    void connect(int x, int y, int weight = 0)
+    void connect(size_t x, size_t y, int weight = 0)
     // adds to G the edge from x to y, or sets new weight to existing edge
     {
-        vertices.at(x);
-        vertices.at(y);
-        // the code above should throw out_of_bounds if indeces are wrong
+        assert(x < size && y < size);
+        // the code above should fall if indeces are wrong
         edges.insert(std::make_pair(makeEdgeKey(x, y), weight));
         vertexNeighbors[x].insert(y);
         vertexNeighbors[y].insert(x);
     }
 
-    void disconnect(int x, int y)
+    void disconnect(size_t x, size_t y)
     // removes the edge from x to y, if it is there
     {
-        vertices.at(x);
-        vertices.at(y);
-        // the code above should throw out_of_bounds if indeces are wrong
+        assert(x < size && y < size);
+        // the code above should fall if indeces are wrong
         edges.erase(makeEdgeKey(x, y));
         vertexNeighbors[x].erase(y);
         vertexNeighbors[y].erase(x);
     }
 
 
-    std::set<int> getVertexNeighbors(int index) const
+    std::set<size_t> getVertexNeighbors(size_t index) const
     // lists all nodes y such that there is an edge from x to y.
     {
         return vertexNeighbors.at(index);;
@@ -95,28 +80,27 @@ public:
 
 
 private:
+    size_t size;
     std::map<const EdgeKey, int> edges;
-    std::vector<SpVertex> vertices;
-    std::vector<std::set<int>> vertexNeighbors;
+    std::vector<std::set<size_t>> vertexNeighbors;
 
-    static const EdgeKey makeEdgeKey(int x, int y)
+    static const EdgeKey makeEdgeKey(size_t x, size_t y)
     // construct a two-value key where values are ordered
     {
         return (x > y) ?	std::make_pair(y, x) : std::make_pair(x, y);
     }
 };
 
-template <class Vertex>
-std::ostream& operator<< (std::ostream& stream, const Graph<Vertex>& G)
+std::ostream& operator<< (std::ostream& stream, const Graph& G)
 {
-    int v = G.verticesCount();
-    int e = G.edgesCount();
+    size_t v = G.verticesCount();
+    size_t e = G.edgesCount();
 
     stream << "Graph with " << v << " vertices and " << e << " edges:" << std::endl;
 
-    for(int i = 0; i < v; i++)
+    for(size_t i = 0; i < v; i++)
     {
-        stream << "V(" << i << ") = " << *G.getVertex(i) << " : ";
+        stream << "Edges(" << i << ") : ";
         for(auto p : G.getVertexNeighbors(i))
         {
             stream << p << "[" << G.distance(i, p) <<"] ";
