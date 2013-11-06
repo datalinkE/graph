@@ -60,8 +60,8 @@ void simulation(int node_count, double edge_density, int weight_limit)
     for(int i = 1; i < node_count; i++)
     {
         DijkstraGraphPath path(G, 0, i);
-        if(path.solvable)
-            paths_summ += path.weight;
+        if(path.exists())
+            paths_summ += path.weight();
         else
             paths_count--;
 
