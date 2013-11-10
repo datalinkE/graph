@@ -18,7 +18,7 @@ public:
     const std::list<Graph::EdgeKey>& edges();
     // returns a list of edges from the given graph that forms MST
 
-    int weight() const;
+    double weight() const;
     // returns MST summary weight
 
     bool valid() const;

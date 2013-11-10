@@ -6,7 +6,7 @@ class PathWithPriority
 // helper class to represent some of the possible pathes as a list of vertex indeces
 {
 public:
-    int priority;
+    double priority;
     std::list<size_t> vertices;
 
     bool operator<(const PathWithPriority& other) const
@@ -23,7 +23,7 @@ public:
         vertices.push_back(start);
     }
 
-    PathWithPriority(const PathWithPriority& path, size_t next_vertex, int weight) :
+    PathWithPriority(const PathWithPriority& path, size_t next_vertex, double weight) :
     // creates new path from some existing (non-final) path
         priority(path.priority + weight)
     {
@@ -75,7 +75,7 @@ public:
     }
 
     std::list<size_t> vertices;
-    int weight;
+    double weight;
     bool solvable;
     int _x, _y;
 };
@@ -92,7 +92,7 @@ bool DijkstraGraphPath::exists() const
     return impl->solvable;
 }
 
-int DijkstraGraphPath::weight() const
+double DijkstraGraphPath::weight() const
 {
     return impl->weight;
 }

@@ -49,7 +49,7 @@ void simulation(int node_count, double edge_density, int weight_limit)
             double roll = static_cast<double>(::rand()) / RAND_MAX;
             if(roll < edge_density)
             {
-                int weight = ::rand() % weight_limit + 1;
+                double weight = ::rand() % weight_limit + 1;
                 G.connect(i, j, weight);
             }
         }
@@ -57,7 +57,7 @@ void simulation(int node_count, double edge_density, int weight_limit)
     ::cout << G << ::endl;
     ::cout << "Finding paths..." << ::endl << ::endl;
 
-    int paths_summ = 0;
+    double paths_summ = 0;
     int paths_count = node_count - 1;
     for(int i = 1; i < node_count; i++)
     {

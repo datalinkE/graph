@@ -29,10 +29,10 @@ public:
     size_t edgesCount() const;
     // returns the number of edges in the graph
 
-    int distance(size_t x, size_t y) const;
+    double distance(size_t x, size_t y) const;
     // returns non-negative value (weight) if there is an edge from node x to node y or -1 otherwise
 
-    void connect(size_t x, size_t y, int weight = 0);
+    void connect(size_t x, size_t y, double weight = 0);
     // adds the edge from x to y into the graph, or sets new weight to existing edge
 
 

@@ -25,7 +25,7 @@ public:
     const std::list<size_t>& vertices() const;
     // if the path exists this field holds corresponding vertex indeces
 
-    int weight() const;
+    double weight() const;
     // if the path exists returns path summary weight
 
 private:

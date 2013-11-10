@@ -57,7 +57,7 @@ public:
             return iElement->second;
     }
 
-    void connect(size_t x, size_t y, int weight = 0)
+    void connect(size_t x, size_t y, double weight = 0)
     // adds to G the edge from x to y, or sets new weight to existing edge
     {
         assert(x < size && y < size);
@@ -125,7 +125,8 @@ Graph::Graph(std::istream& in)
 
     while(in)
     {
-       size_t x, y, weight;
+       size_t x, y;
+       double weight;
        in >> x;
        if(!in)  break;
        in >> y;
@@ -145,12 +146,12 @@ size_t Graph::edgesCount() const
     return impl->edgesCount();
 }
 
-int Graph::distance(size_t x, size_t y) const
+double Graph::distance(size_t x, size_t y) const
 {
     return impl->distance(x, y);
 }
 
-void Graph::connect(size_t x, size_t y, int weight)
+void Graph::connect(size_t x, size_t y, double weight)
 {
     impl->connect(x, y, weight);
 }

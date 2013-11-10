@@ -6,7 +6,7 @@ class EdgeWithPriority
 // helper class to use graph eges in priority queue
 {
 public:
-    int weight;
+    double weight;
     Graph::EdgeKey key;
 
     EdgeWithPriority(int x, int y, const Graph& graph)
@@ -81,7 +81,7 @@ public:
 
 
     const Graph& graph;
-    int summaryWeight;
+    double summaryWeight;
     std::list<Graph::EdgeKey> edges;
 
 private:
@@ -104,7 +104,7 @@ bool PrimGraphMst::valid() const
     return impl->valid();
 }
 
-int PrimGraphMst::weight() const
+double PrimGraphMst::weight() const
 {
     return impl->summaryWeight;
 }
@@ -117,7 +117,7 @@ Graph* PrimGraphMst::makeTreeGraph()
     Graph* result = new Graph(impl->graph.verticesCount());
     for(Graph::EdgeKey element : impl->edges)
     {
-        int weight = impl->graph.distance(element.first, element.second);
+        double weight = impl->graph.distance(element.first, element.second);
         result->connect(element.first, element.second, weight);
     }
 
