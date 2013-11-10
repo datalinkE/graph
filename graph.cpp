@@ -45,7 +45,7 @@ public:
         return edges.size();
     }
 
-    int distance(size_t x, size_t y) const
+    double distance(size_t x, size_t y) const
     // returns non-negative value (weight) if there is an edge from node x to node y or -1 otherwise
     {
         assert(x < size && y < size);
@@ -86,7 +86,7 @@ public:
 
 private:
     size_t size;
-    std::map<const Graph::EdgeKey, int> edges;
+    std::map<const Graph::EdgeKey, double> edges;
     std::vector<std::set<size_t>> vertexNeighbors;
 };
 

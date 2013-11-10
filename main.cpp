@@ -93,7 +93,8 @@ int main()
     simulation(50, 0.4, 10);
     */
 
-    const char SAMPLE_GRAPH_FILE[] = "SampleTestData.txt";
+    //const char SAMPLE_GRAPH_FILE[] = "SampleTestData.txt";
+    const char SAMPLE_GRAPH_FILE[] = "TinyDataDouble.txt";
 
     ::cout << "Constructing graph object from " << SAMPLE_GRAPH_FILE << ::endl;
     ::filebuf fb;
@@ -106,7 +107,7 @@ int main()
 
         PrimGraphMst mst(G);
 
-        ::cout << "MST is"
+        ::cout << "MST is "
                << (mst.valid() ? "valid" : "not valid")
                << " weight = " << mst.weight() << ::endl;
 
