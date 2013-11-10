@@ -1,8 +1,10 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <fstream>
 #include "graph.h"
 #include "dijkstra_graph_path.h"
+#include "prim_graph_mst.h"
 
 using namespace std;
 
@@ -83,11 +85,40 @@ int main()
     // programm output is massive, redirect to file for better experience
     ::set_terminate(something_wrong);
 
+    /*  it was Assignment 2
     ::cout << "Part 1" << ::endl;
     simulation(50, 0.2, 10);
 
     ::cout << ::endl << "Part 2" << ::endl;
     simulation(50, 0.4, 10);
+    */
+
+    const char SAMPLE_GRAPH_FILE[] = "SampleTestData.txt";
+
+    ::cout << "Constructing graph object from " << SAMPLE_GRAPH_FILE << ::endl;
+    ::filebuf fb;
+    if (fb.open (SAMPLE_GRAPH_FILE,::ios::in))
+    {
+        std::istream in(&fb);
+        Graph G(in);
+
+        ::cout << G << ::endl << ::endl;
+
+        PrimGraphMst mst(G);
+
+        ::cout << "MST is"
+               << (mst.valid() ? "valid" : "not valid")
+               << " weight = " << mst.weight() << ::endl;
+
+        ::shared_ptr<Graph> mst_graph(mst.makeTreeGraph());
+
+        ::cout << *mst_graph;
+    }
+    else
+    {
+        ::cout << "Can't open file"  << ::endl;
+    }
+
     return 0;
 }
 

@@ -18,6 +18,11 @@ public:
     Graph(size_t capacity);
     // constructor reservers space for selected capacity
 
+    Graph(std::istream& in);
+    // constructor reads graph data from a file
+    // first line - number of vertices
+    // other lines - vertex_index1 vertex_index2 edge_weight
+
     size_t verticesCount() const;
     // returns the number of vertices in the graph
 
@@ -36,6 +41,14 @@ public:
 
     std::set<size_t> getVertexNeighbors(size_t index) const;
     // lists all nodes y such that there is an edge from x to y.
+
+    typedef std::pair<size_t, size_t> EdgeKey;
+    // common internal representation of an edge
+    // it is not necessary to use since all public functions
+    // take vertex indeces
+
+    static const EdgeKey makeEdgeKey(size_t x, size_t y);
+    // construct a two-value key where values are ordered
 
 private:
     std::shared_ptr<GraphImplementation> impl;

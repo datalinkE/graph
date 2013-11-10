@@ -7,6 +7,11 @@
 
 #include "graph.h"
 
+const Graph::EdgeKey Graph::makeEdgeKey(size_t x, size_t y)
+// construct a two-value key where values are ordered
+{
+    return (x > y) ?	std::make_pair(y, x) : std::make_pair(x, y);
+}
 
 // non-public class that do the job
 
@@ -20,7 +25,6 @@ class GraphImplementation
 // calls like some_function( index1, index2 ) and some_function( index2, index1) are equivalent.
 {
 public:
-    typedef std::pair<size_t, size_t> EdgeKey;
 
     GraphImplementation(size_t capacity) :
     // constructor reservers space for selected capacity
@@ -46,7 +50,7 @@ public:
     {
         assert(x < size && y < size);
         // the code above should fall if indeces are wrong
-        auto iElement = edges.find(makeEdgeKey(x, y));
+        auto iElement = edges.find(Graph::makeEdgeKey(x, y));
         if (iElement == edges.end())
             return -1;
         else
@@ -58,7 +62,7 @@ public:
     {
         assert(x < size && y < size);
         // the code above should fall if indeces are wrong
-        edges.insert(std::make_pair(makeEdgeKey(x, y), weight));
+        edges.insert(std::make_pair(Graph::makeEdgeKey(x, y), weight));
         vertexNeighbors[x].insert(y);
         vertexNeighbors[y].insert(x);
     }
@@ -68,11 +72,10 @@ public:
     {
         assert(x < size && y < size);
         // the code above should fall if indeces are wrong
-        edges.erase(makeEdgeKey(x, y));
+        edges.erase(Graph::makeEdgeKey(x, y));
         vertexNeighbors[x].erase(y);
         vertexNeighbors[y].erase(x);
     }
-
 
     std::set<size_t> getVertexNeighbors(size_t index) const
     // lists all nodes y such that there is an edge from x to y.
@@ -83,14 +86,8 @@ public:
 
 private:
     size_t size;
-    std::map<const EdgeKey, int> edges;
+    std::map<const Graph::EdgeKey, int> edges;
     std::vector<std::set<size_t>> vertexNeighbors;
-
-    static const EdgeKey makeEdgeKey(size_t x, size_t y)
-    // construct a two-value key where values are ordered
-    {
-        return (x > y) ?	std::make_pair(y, x) : std::make_pair(x, y);
-    }
 };
 
 std::ostream& operator<< (std::ostream& stream, const Graph& G)
@@ -117,6 +114,25 @@ std::ostream& operator<< (std::ostream& stream, const Graph& G)
 Graph::Graph(size_t capacity)
 {
     impl = std::make_shared<GraphImplementation>(capacity);
+}
+
+Graph::Graph(std::istream& in)
+{
+    assert(in);
+    size_t capacity;
+    in >> capacity;
+    impl = std::make_shared<GraphImplementation>(capacity);
+
+    while(in)
+    {
+       size_t x, y, weight;
+       in >> x;
+       if(!in)  break;
+       in >> y;
+       if(!in)  break;
+       in >> weight;
+       impl->connect(x, y, weight);
+    }
 }
 
 size_t Graph::verticesCount() const

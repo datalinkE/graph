@@ -45,7 +45,7 @@ public:
     // using a kind of A* algorithm
     {
         std::priority_queue<PathWithPriority> pq;
-        std::set<int> visited;
+        std::set<size_t> visited;
 
         pq.push(x);
 
