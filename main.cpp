@@ -94,7 +94,8 @@ int main()
     */
 
     //const char SAMPLE_GRAPH_FILE[] = "SampleTestData.txt";
-    const char SAMPLE_GRAPH_FILE[] = "TinyDataDouble.txt";
+    //const char SAMPLE_GRAPH_FILE[] = "TinyDataDouble.txt";
+    const char SAMPLE_GRAPH_FILE[] = "10000EWG.txt";
 
     ::cout << "Constructing graph object from " << SAMPLE_GRAPH_FILE << ::endl;
     ::filebuf fb;
